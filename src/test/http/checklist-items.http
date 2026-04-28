@@ -1,0 +1,110 @@
+@baseUrl = http://localhost:8080
+@itemId = {{createItem.response.body.id}}
+
+### 1. Get all items
+GET {{baseUrl}}/api/checklist-items
+Accept: application/json
+
+###
+
+### 2. Get all incomplete items
+GET {{baseUrl}}/api/checklist-items?completed=false
+Accept: application/json
+
+###
+
+### 3. Get all completed items
+GET {{baseUrl}}/api/checklist-items?completed=true
+Accept: application/json
+
+###
+
+### 4. Create a new item
+# @name createItem
+POST {{baseUrl}}/api/checklist-items
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Buy groceries",
+  "description": "Milk, eggs, bread"
+}
+
+###
+
+### 5. Create an item without description (description is optional)
+POST {{baseUrl}}/api/checklist-items
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Call the dentist"
+}
+
+###
+
+### 6. Get item by ID (uses ID captured from create)
+GET {{baseUrl}}/api/checklist-items/{{itemId}}
+Accept: application/json
+
+###
+
+### 7. Update item — mark as complete
+PUT {{baseUrl}}/api/checklist-items/{{itemId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Buy groceries",
+  "description": "Milk, eggs, bread",
+  "completed": true
+}
+
+###
+
+### 8. Update item — reopen (mark as incomplete)
+PUT {{baseUrl}}/api/checklist-items/{{itemId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Buy groceries",
+  "description": "Milk, eggs, bread",
+  "completed": false
+}
+
+###
+
+### 9. Delete item
+DELETE {{baseUrl}}/api/checklist-items/{{itemId}}
+
+###
+
+### --- Error cases ---
+
+### 10. Get non-existent item — expect 404
+GET {{baseUrl}}/api/checklist-items/99999
+Accept: application/json
+
+###
+
+### 11. Create item with missing title — expect 400
+POST {{baseUrl}}/api/checklist-items
+Content-Type: application/json
+Accept: application/json
+
+{
+  "description": "No title provided"
+}
+
+###
+
+### 12. Update item with missing completed field — expect 400
+PUT {{baseUrl}}/api/checklist-items/{{itemId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Buy groceries",
+  "description": "Missing completed field"
+}
