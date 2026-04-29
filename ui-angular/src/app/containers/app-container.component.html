@@ -1,0 +1,25 @@
+<div class="min-h-screen bg-gray-50 px-4 py-10">
+  <div class="mx-auto max-w-lg space-y-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Checklist</h1>
+      @if (!loading()) {
+        <p class="text-sm text-gray-500 mt-1">
+          {{ completed() }} of {{ items().length }} completed
+        </p>
+      }
+    </div>
+
+    <app-add-item-form (add)="onAdd($event)" />
+
+    @if (loading()) {
+      <p class="text-center text-sm text-gray-400 py-10">Loading…</p>
+    } @else if (error()) {
+      <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+        {{ error() }}
+        <button (click)="fetchItems()" class="ml-2 underline hover:no-underline">Retry</button>
+      </div>
+    } @else {
+      <app-item-list [items]="items()" (delete)="onDelete($event)" />
+    }
+  </div>
+</div>
