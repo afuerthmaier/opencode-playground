@@ -1,0 +1,7 @@
+<ul class="space-y-2">
+  @for (item of items(); track item.id) {
+    <app-item-row [item]="item" (delete)="delete.emit($event)" />
+  } @empty {
+    <p class="text-center text-sm text-gray-400 py-10">No items yet. Add one above.</p>
+  }
+</ul>
