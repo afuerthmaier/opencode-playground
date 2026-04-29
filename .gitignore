@@ -44,3 +44,7 @@ application-secret.yml
 # Logs
 *.log
 logs/
+
+node_modules/
+.vite
+dist
